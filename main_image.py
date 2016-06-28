@@ -48,8 +48,16 @@ for i in xrange(50):
     if error <= e:
         break
 
-print "Finished. Time = " + str(time.time() - start)
+print "training finished. Time = " + str(time.time() - start)
 
 print "save model..."
 save_model("./model/vae_mnist.model", model)
 
+print "validation.."
+load_model("./model/vae_mnist.model", model)
+error = 0
+for batch_id, xy in valid_xy.items():
+    X = xy[0]
+    cost, y = model.predict(X)
+    error += cost
+print "Loss = " + str(error / len(valid_xy))
