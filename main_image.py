@@ -4,9 +4,9 @@ import sys
 import numpy as np
 import theano
 import theano.tensor as T
-#from utils_pg import *
 from VAE import *
 import data
+import matplotlib.pyplot as plt
 
 use_gpu(0)
 
@@ -34,7 +34,7 @@ model = VAE(dim_x, dim_x, hidden_size, latent_size, optimizer)
 
 print "training..."
 start = time.time()
-for i in xrange(50):
+for i in xrange(0):
     error = 0.0
     in_start = time.time()
     for batch_id, xy in train_xy.items():
@@ -51,7 +51,7 @@ for i in xrange(50):
 print "training finished. Time = " + str(time.time() - start)
 
 print "save model..."
-save_model("./model/vae_mnist.model", model)
+#save_model("./model/vae_mnist.model", model)
 
 print "validation.."
 load_model("./model/vae_mnist.model", model)
@@ -61,3 +61,18 @@ for batch_id, xy in valid_xy.items():
     cost, y = model.predict(X)
     error += cost
 print "Loss = " + str(error / len(valid_xy))
+
+
+plt.figure(figsize=(8, 12))
+for i in range(5):
+    plt.subplot(5, 2, 2*i + 1)
+    plt.imshow(X[i].reshape(28, 28), vmin=0, vmax=1)
+    plt.title("Test input")
+    plt.colorbar()
+    plt.subplot(5, 2, 2*i + 2)
+    plt.imshow(y[i].reshape(28, 28), vmin=0, vmax=1)
+    plt.title("Reconstruction")
+    plt.colorbar()
+plt.tight_layout()
+
+
