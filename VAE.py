@@ -75,8 +75,8 @@ class VAE(object):
         
         gparams = []
         for param in self.params:
-            #gparam = T.grad(cost, param)
-            gparam = T.clip(T.grad(cost, param), -10, 10)
+            gparam = T.grad(cost, param)
+            #gparam = T.clip(T.grad(cost, param), -10, 10)
             gparams.append(gparam)
 
         lr = T.scalar("lr")

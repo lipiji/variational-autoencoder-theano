@@ -11,13 +11,13 @@ import data
 use_gpu(0)
 
 e = 0.01
-lr = 1
+lr = 0.001
 drop_rate = 0.
 batch_size = 128
-hidden_size = 400
+hidden_size = 500
 latent_size = 50
 # try: sgd, momentum, rmsprop, adagrad, adadelta, adam, nesterov_momentum
-optimizer = "adadelta"
+optimizer = "adam"
 continuous = False
 
 if continuous:
