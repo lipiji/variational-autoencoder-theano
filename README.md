@@ -1,6 +1,22 @@
 ##Variational Auto-encoder
 
-python main_image.py
+run: python main_image.py
+
+### Visualization
+ - Reconstructions:
+ <p align="center">
+  <img src="https://github.com/lipiji/variational-autoencoder-theano/blob/master/docs/reconstruct.png" width="400"/>
+ </p>
+ - 2d latent space
+  <p align="center">
+  <img src="https://github.com/lipiji/variational-autoencoder-theano/blob/master/docs/2dstructure.png" width="500"/>
+ </p>
+ - Generations from positions
+  <p align="center">
+  <img src="https://github.com/lipiji/variational-autoencoder-theano/blob/master/docs/manifold.png" width="500"/>
+ </p>
+ - Visualizatin code from: https://jmetzen.github.io/2015-11-27/vae.html
+
 
 ### Reference
  - Kingma, Diederik P., and Max Welling. "[Auto-encoding variational bayes](http://arxiv.org/abs/1312.6114)." arXiv preprint arXiv:1312.6114 (2013).
