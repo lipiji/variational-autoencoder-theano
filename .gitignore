@@ -1,5 +1,6 @@
 *.pyc
 *.npy
 *.pkl
+*.png
 data/*
 model/*
