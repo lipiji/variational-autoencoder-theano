@@ -54,6 +54,9 @@ print "training finished. Time = " + str(time.time() - start)
 print "save model..."
 save_model("./model/vae_mnist.model", model)
 
+'''-------------Visualization------------------'''
+# code from: https://jmetzen.github.io/2015-11-27/vae.html
+
 load_model("./model/vae_mnist.model", model)
 
 print "validation.."
@@ -81,6 +84,7 @@ plt.show()
 fig.savefig("reconstruct.png", bbox_inches="tight")
 plt.close(fig)
 
+## 2d structure
 if latent_size == 2:
     test_xy = data.batched(test_set, 5000)
     X = test_xy[0][0]
@@ -92,3 +96,25 @@ if latent_size == 2:
     plt.show()
     fig.savefig("2dstructure.png", bbox_inches="tight")
     plt.close(fig)
+
+## manifold 
+nx = ny = 20
+x_values = np.linspace(-3, 3, nx)
+y_values = np.linspace(-3, 3, ny)
+
+canvas = np.empty((28*ny, 28*nx))
+for i, yi in enumerate(x_values):
+    for j, xi in enumerate(y_values):
+        z = np.array([[xi, yi]])
+        z = np.array(z, dtype=theano.config.floatX)
+        y = model.generate(z)
+        canvas[(nx-i-1)*28:(nx-i)*28, j*28:(j+1)*28] = y.reshape(28, 28)
+
+fit = plt.figure(figsize=(8, 10))        
+Xi, Yi = np.meshgrid(x_values, y_values)
+plt.imshow(canvas, origin="upper")
+plt.tight_layout()
+plt.show()
+fig.savefig("manifold.png", bbox_inches="tight")
+plt.close(fig)
+

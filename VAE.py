@@ -86,4 +86,5 @@ class VAE(object):
         self.train = theano.function(inputs = [self.X, lr], outputs = cost, updates = updates)
         self.valid = theano.function(inputs = [self.X], outputs = [cost, self.reconstruct])
         self.project = theano.function(inputs = [self.X], outputs = self.mu)
+        self.generate = theano.function(inputs = [self.z], outputs = self.reconstruct)
   
