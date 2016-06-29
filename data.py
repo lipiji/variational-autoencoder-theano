@@ -145,30 +145,35 @@ def index2seqs(lines, x_index, w2i):
     return concat_X, concat_Y, mask, len(batch_x)
 
 #data: http://deeplearning.net/data/mnist/mnist.pkl.gz
-def mnist(batch_size = 1):
-    def batch(X, Y, batch_size):
-        data_xy = {}
-        batch_x = []
-        batch_y = []
-        batch_id = 0
-        for i in xrange(len(X)):
-            batch_x.append(X[i])
-            y = np.zeros((10), dtype = theano.config.floatX)
-            y[Y[i]] = 1
-            batch_y.append(y)
-            if (len(batch_x) == batch_size) or (i == len(X) - 1):
-                data_xy[batch_id] = [np.matrix(batch_x, dtype = theano.config.floatX), \
-                                     np.matrix(batch_y, dtype = theano.config.floatX)]
-                batch_id += 1
-                batch_x = []
-                batch_y = []
-        return data_xy
+
+def mnist():
     f = gzip.open(curr_path + "/data/mnist.pkl.gz", "rb")
     train_set, valid_set, test_set = cPickle.load(f)
     f.close()
-    return batch(train_set[0], train_set[1], batch_size), \
-           batch(valid_set[0], valid_set[1], batch_size), \
-           batch(test_set[0], test_set[1], batch_size)
+    return train_set, valid_set, test_set
+
+def batched(data_set, batch_size = 1):
+    lst = [n for n in range(len(data_set[0]))]
+    np.random.shuffle(lst)
+    X = data_set[0][lst,]
+    Y = data_set[1][lst]
+
+    data_xy = {}
+    batch_x = []
+    batch_y = []
+    batch_id = 0
+    for i in xrange(len(X)):
+        batch_x.append(X[i])
+        y = np.zeros((10), dtype = theano.config.floatX)
+        y[Y[i]] = 1
+        batch_y.append(y)
+        if (len(batch_x) == batch_size) or (i == len(X) - 1):
+            data_xy[batch_id] = [np.matrix(batch_x, dtype = theano.config.floatX), \
+                                     np.matrix(batch_y, dtype = theano.config.floatX)]
+            batch_id += 1
+            batch_x = []
+            batch_y = []
+    return data_xy
 
 #data: http://deeplearning.net/data/mnist/mnist.pkl.gz
 def shared_mnist():
