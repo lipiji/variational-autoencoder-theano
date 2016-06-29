@@ -10,7 +10,6 @@ import matplotlib.pyplot as plt
 
 use_gpu(0)
 
-e = 0.01
 lr = 0.001
 drop_rate = 0.
 batch_size = 128
@@ -46,8 +45,6 @@ for i in xrange(50):
 
     error /= len(train_xy);
     print "Iter = " + str(i) + ", Loss = " + str(error) + ", Time = " + str(in_time)
-    if error <= e:
-        break
 
 print "training finished. Time = " + str(time.time() - start)
 
@@ -68,8 +65,7 @@ for batch_id, xy in valid_xy.items():
     error += cost
 print "Loss = " + str(error / len(valid_xy))
 
-
-fig = plt.figure(figsize=(8, 12))
+plt.figure(figsize=(8, 12))
 for i in range(5):
     plt.subplot(5, 2, 2*i + 1)
     plt.imshow(X[i].reshape(28, 28), vmin=0, vmax=1)
@@ -80,41 +76,37 @@ for i in range(5):
     plt.title("Reconstruction")
     plt.colorbar()
 plt.tight_layout()
+plt.savefig("reconstruct.png", bbox_inches="tight")
 plt.show()
-fig.savefig("reconstruct.png", bbox_inches="tight")
-plt.close(fig)
 
-## 2d structure
+## manifold 
 if latent_size == 2:
     test_xy = data.batched(test_set, 5000)
     X = test_xy[0][0]
     mu = np.array(model.project(X))
     
-    fig = plt.figure(figsize=(8, 6)) 
+    plt.figure(figsize=(8, 6)) 
     plt.scatter(mu[:, 0], mu[:, 1], c=np.argmax(np.array(test_xy[0][1]), 1))
     plt.colorbar()
+    plt.savefig("2dstructure.png", bbox_inches="tight")
     plt.show()
-    fig.savefig("2dstructure.png", bbox_inches="tight")
-    plt.close(fig)
+    
+    '''--------------------------'''
+    nx = ny = 20
+    x_values = np.linspace(-3, 3, nx)
+    y_values = np.linspace(-3, 3, ny) 
+    canvas = np.empty((28*ny, 28*nx))
+    for i, yi in enumerate(x_values):
+        for j, xi in enumerate(y_values):
+            z = np.array([[xi, yi]])
+            z = np.array(z, dtype=theano.config.floatX)
+            y = model.generate(z)
+            canvas[(nx-i-1)*28:(nx-i)*28, j*28:(j+1)*28] = y.reshape(28, 28)
 
-## manifold 
-nx = ny = 20
-x_values = np.linspace(-3, 3, nx)
-y_values = np.linspace(-3, 3, ny)
-
-canvas = np.empty((28*ny, 28*nx))
-for i, yi in enumerate(x_values):
-    for j, xi in enumerate(y_values):
-        z = np.array([[xi, yi]])
-        z = np.array(z, dtype=theano.config.floatX)
-        y = model.generate(z)
-        canvas[(nx-i-1)*28:(nx-i)*28, j*28:(j+1)*28] = y.reshape(28, 28)
-
-fit = plt.figure(figsize=(8, 10))        
-Xi, Yi = np.meshgrid(x_values, y_values)
-plt.imshow(canvas, origin="upper")
-plt.tight_layout()
-plt.show()
-fig.savefig("manifold.png", bbox_inches="tight")
-plt.close(fig)
+    fit = plt.figure(figsize=(8, 10))        
+    Xi, Yi = np.meshgrid(x_values, y_values)
+    plt.imshow(canvas, origin="upper")
+    plt.tight_layout()
+    plt.savefig("manifold.png", bbox_inches="tight")
+    plt.show()
 
