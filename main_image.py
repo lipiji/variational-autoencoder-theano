@@ -61,7 +61,7 @@ valid_xy = data.batched(valid_set, batch_size)
 error = 0
 for batch_id, xy in valid_xy.items():
     X = xy[0]
-    cost, y = model.valid(X)
+    cost, y = model.validate(X)
     error += cost
 print "Loss = " + str(error / len(valid_xy))
 
@@ -83,6 +83,7 @@ plt.show()
 if latent_size == 2:
     test_xy = data.batched(test_set, 5000)
     X = test_xy[0][0]
+
     mu = np.array(model.project(X))
     
     plt.figure(figsize=(8, 6)) 
@@ -100,7 +101,9 @@ if latent_size == 2:
         for j, xi in enumerate(y_values):
             z = np.array([[xi, yi]])
             z = np.array(z, dtype=theano.config.floatX)
+            
             y = model.generate(z)
+
             canvas[(nx-i-1)*28:(nx-i)*28, j*28:(j+1)*28] = y.reshape(28, 28)
 
     fit = plt.figure(figsize=(8, 10))        
