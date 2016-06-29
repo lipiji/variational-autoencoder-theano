@@ -99,11 +99,8 @@ if latent_size == 2:
     canvas = np.empty((28*ny, 28*nx))
     for i, yi in enumerate(x_values):
         for j, xi in enumerate(y_values):
-            z = np.array([[xi, yi]])
-            z = np.array(z, dtype=theano.config.floatX)
-            
+            z = np.array([[xi, yi]], dtype=theano.config.floatX)
             y = model.generate(z)
-
             canvas[(nx-i-1)*28:(nx-i)*28, j*28:(j+1)*28] = y.reshape(28, 28)
 
     fit = plt.figure(figsize=(8, 10))        
