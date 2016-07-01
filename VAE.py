@@ -51,12 +51,7 @@ class VAE(object):
         self.var = T.exp(log_var)
         self.sigma = T.sqrt(self.var)
 
-        seed = 234
-        if "gpu" in theano.config.device:
-            srng = theano.sandbox.cuda.rng_curand.CURAND_RandomStreams(seed=seed)
-        else:
-            srng = T.shared_randomstreams.RandomStreams(seed=seed)
-        
+        srng = T.shared_randomstreams.RandomStreams(234)
         eps = srng.normal(self.mu.shape)
         self.z = self.mu + self.sigma * eps
 
