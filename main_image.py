@@ -20,7 +20,8 @@ optimizer = "adam"
 continuous = False
 
 if continuous:
-    pass
+    #XXX freyface
+    train_set, valid_set, test_set = data.mnist()
 else:
     train_set, valid_set, test_set = data.mnist()
 
@@ -30,7 +31,7 @@ dim_y = train_xy[0][1].shape[1]
 print "#features = ", dim_x, "#labels = ", dim_y
 
 print "compiling..."
-model = VAE(dim_x, dim_x, hidden_size, latent_size, optimizer)
+model = VAE(dim_x, dim_x, hidden_size, latent_size, continuous, optimizer)
 
 print "training..."
 start = time.time()
