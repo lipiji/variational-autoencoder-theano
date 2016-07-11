@@ -52,7 +52,7 @@ class VAE(object):
             self.params += [self.W_hy, self.b_hy]
 
         # encoder
-        h_enc = T.tanh(T.dot(self.X, self.W_xh) + self.b_xh)
+        h_enc = T.nnet.relu(T.dot(self.X, self.W_xh) + self.b_xh)
         
         self.mu = T.dot(h_enc, self.W_hu) + self.b_hu
         log_var = T.dot(h_enc, self.W_hsigma) + self.b_hsigma
@@ -64,7 +64,7 @@ class VAE(object):
         self.z = self.mu + self.sigma * eps
 
         # decoder
-        h_dec = T.tanh(T.dot(self.z, self.W_zh) + self.b_zh)
+        h_dec = T.nnet.relu(T.dot(self.z, self.W_zh) + self.b_zh)
         if self.continuous:
             self.reconstruct = T.dot(h_dec, self.W_hyu) + self.b_hyu
             self.log_var_dec = T.dot(h_dec, self.W_hysigma) + self.b_hysigma
