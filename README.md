@@ -15,6 +15,9 @@ run: python main_image.py
   <p align="center">
   <img src="https://github.com/lipiji/variational-autoencoder-theano/blob/master/docs/manifold.png" width="500"/>
  </p>
+  <p align="center">
+  <img src="https://github.com/lipiji/variational-autoencoder-theano/blob/master/docs/face.png" width="500"/>
+ </p>
  - Visualizatin code from: https://jmetzen.github.io/2015-11-27/vae.html
 
 
