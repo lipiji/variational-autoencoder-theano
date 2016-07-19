@@ -31,7 +31,7 @@ model = VAE(dim_x, dim_x, hidden_size, latent_size, continuous, optimizer)
 
 print "training..."
 start = time.time()
-for i in xrange(50):
+for i in xrange(100):
     error = 0.0
     in_start = time.time()
     for batch_id, xy in train_xy.items():
@@ -91,8 +91,9 @@ if latent_size == 2:
     #################
 
     nx = ny = 20
-    x_values = np.linspace(-3, 3, nx)
-    y_values = np.linspace(-3, 3, ny) 
+    v = 3
+    x_values = np.linspace(-v, v, nx)
+    y_values = np.linspace(-v, v, ny) 
     canvas = np.empty((28*ny, 20*nx))
     for i, yi in enumerate(x_values):
         for j, xi in enumerate(y_values):
