@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 
 use_gpu(0)
 
-lr = 0.01
+lr = 0.001
 drop_rate = 0.
 batch_size = 128
 hidden_size = 500
@@ -78,6 +78,18 @@ plt.show()
 
 ## manifold 
 if latent_size == 2:
+    test_xy = data.batched_freyface(test_set, 160)
+    X = test_xy[0][0]
+
+    mu = np.array(model.project(X))
+    
+    plt.figure(figsize=(8, 6)) 
+    plt.scatter(mu[:, 0], mu[:, 1], c="r")
+    plt.savefig("2dstructure.png", bbox_inches="tight")
+    plt.show()
+    
+    #################
+
     nx = ny = 20
     x_values = np.linspace(-3, 3, nx)
     y_values = np.linspace(-3, 3, ny) 
