@@ -16,7 +16,18 @@ def mnist():
     f.close()
     return train_set, valid_set, test_set
 
-def batched(data_set, batch_size = 1):
+def freyface():
+    raw_faces = cPickle.load(open(curr_path + "/data/freyfaces.pkl", "rb"))
+    mat_faces = np.zeros((len(raw_faces), len(raw_faces[0])))
+    for i in range(len(raw_faces)): # 1965 in total
+        mat_faces[i, :] = np.asarray(raw_faces[i])
+
+    train_set = mat_faces[:1600, :]
+    valid_set = mat_faces[1600:1800, :]
+    test_set = mat_faces[1800:, :]
+    return (train_set, ), (valid_set, ), (test_set, )
+
+def batched_mnist(data_set, batch_size = 1):
     lst = [n for n in range(len(data_set[0]))]
     np.random.shuffle(lst)
     X = data_set[0][lst,]
@@ -37,6 +48,21 @@ def batched(data_set, batch_size = 1):
             batch_id += 1
             batch_x = []
             batch_y = []
+    return data_xy
+
+def batched_freyface(data_set, batch_size = 1):
+    lst = [n for n in range(len(data_set[0]))]
+    np.random.shuffle(lst)
+    data_xy = {}
+    batch_x = []
+    X = data_set[0][lst,]
+    batch_id = 0
+    for i in xrange(len(X)):
+        batch_x.append(X[i])
+        if (len(batch_x) == batch_size) or (i == len(X) - 1):
+            data_xy[batch_id] = [np.matrix(batch_x, dtype = theano.config.floatX)]
+            batch_id += 1
+            batch_x = []
     return data_xy
 
 #data: http://deeplearning.net/data/mnist/mnist.pkl.gz
