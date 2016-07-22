@@ -36,7 +36,7 @@ for i in xrange(50):
     in_start = time.time()
     for batch_id, xy in train_xy.items():
         X = xy[0] 
-        cost = model.train(X, lr)
+        cost, z = model.train(X, lr)
         error += cost
     in_time = time.time() - in_start
 
@@ -47,6 +47,7 @@ print "training finished. Time = " + str(time.time() - start)
 
 print "save model..."
 save_model("./model/vae_mnist.model", model)
+
 
 '''-------------Visualization------------------'''
 # code from: https://jmetzen.github.io/2015-11-27/vae.html

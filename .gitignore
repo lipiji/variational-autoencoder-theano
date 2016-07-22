@@ -4,5 +4,3 @@
 *.png
 data/*
 model/*
-main_summ.py
-VAE_SUMM.py

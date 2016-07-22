@@ -98,7 +98,7 @@ class VAE(object):
         optimizer = eval(self.optimizer)
         updates = optimizer(self.params, gparams, lr)
         
-        self.train = theano.function(inputs = [self.X, lr], outputs = cost, updates = updates)
+        self.train = theano.function(inputs = [self.X, lr], outputs = [cost, self.z], updates = updates)
         self.validate = theano.function(inputs = [self.X], outputs = [cost, self.reconstruct])
         self.project = theano.function(inputs = [self.X], outputs = self.mu)
         self.generate = theano.function(inputs = [self.z], outputs = self.reconstruct)
