@@ -36,7 +36,7 @@ for i in xrange(100):
     in_start = time.time()
     for batch_id, xy in train_xy.items():
         X = xy[0] 
-        cost = model.train(X, lr)
+        cost, z = model.train(X, lr)
         error += cost
     in_time = time.time() - in_start
 
