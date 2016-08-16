@@ -1,6 +1,8 @@
 ##Variational Auto-encoder
 
-run: python main_image.py
+run: python main_mnist.py
+     
+     python main_face.py
 
 ### Visualization
  - Reconstructions:
