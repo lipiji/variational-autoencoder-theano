@@ -2,10 +2,6 @@
 
 run: python main_image.py
 
- <p align="center">
-  <img src="https://github.com/lipiji/variational-autoencoder-theano/blob/master/docs/vaes.png" width="300"/>
- </p>
-
 ### Visualization
  - Reconstructions:
  <p align="center">
