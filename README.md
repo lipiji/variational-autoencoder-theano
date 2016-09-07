@@ -3,6 +3,11 @@
 run: python main_mnist.py
      
      python main_face.py
+     
+<p align="center">
+<img src="https://github.com/lipiji/variational-autoencoder-theano/blob/master/docs/vaes.png" width="300"/>
+</p>
+
 
 ### Visualization
  - Reconstructions:
