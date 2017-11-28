@@ -18,7 +18,11 @@ class VAE(object):
 
         self.define_layers()
         self.define_train_test_funcs()
-        
+ 
+    def noiser(self, n):
+        z = init_normal_weight((n, self.latent_size))
+        return floatX(z)
+       
     def define_layers(self):
         self.params = []
         

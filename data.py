@@ -154,7 +154,7 @@ def batched_news(x_idx, data):
         d = docs[xi]
         for w in d:
             X[i, w2i[w]] += 1
-   
+    
     for i in xrange(len(x_idx)):
         norm2 = np.linalg.norm(X[i,:])
         if norm2 != 0:

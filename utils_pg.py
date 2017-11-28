@@ -5,13 +5,16 @@ import theano.tensor as T
 import cPickle as pickle
 
 # set use gpu programatically
-import theano.sandbox.cuda
-def use_gpu(gpu_id):
-    if gpu_id > -1:
-        theano.sandbox.cuda.use("gpu" + str(gpu_id))
+#import theano.sandbox.cuda
+#def use_gpu(gpu_id):
+#    if gpu_id > -1:
+#        theano.sandbox.cuda.use("gpu" + str(gpu_id))
 
 def floatX(X):
     return np.asarray(X, dtype=theano.config.floatX)
+
+def init_normal_weight(shape, scale=0.01):
+    return np.random.normal(loc=0.0, scale=scale, size=shape)
 
 def init_weights(shape, name, sample = "xavier"):
     if sample == "uniform":

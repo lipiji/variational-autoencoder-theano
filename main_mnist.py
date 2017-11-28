@@ -8,7 +8,7 @@ from VAE import *
 import data
 import matplotlib.pyplot as plt
 
-use_gpu(0)
+use_gpu(2)
 
 lr = 0.001
 drop_rate = 0.

@@ -1,4 +1,8 @@
 #pylint: skip-file
+import os
+cudaid = 3
+os.environ["THEANO_FLAGS"] = "device=cuda" + str(cudaid)
+
 import time
 import sys
 import numpy as np
@@ -8,13 +12,13 @@ from VAE import *
 import data
 import matplotlib.pyplot as plt
 
-use_gpu(0)
+#use_gpu(2)
 
 lr = 0.001
 drop_rate = 0.
 batch_size = 20
 hidden_size = 500
-latent_size = 2
+latent_size = 50
 # try: sgd, momentum, rmsprop, adagrad, adadelta, adam, nesterov_momentum
 optimizer = "adam"
 continuous = False
@@ -31,7 +35,7 @@ model = VAE(dim_x, dim_x, hidden_size, latent_size, continuous, optimizer)
 
 print "training..."
 start = time.time()
-for i in xrange(10):
+for i in xrange(30):
     train_xy = data.batched_idx(train_idx, batch_size)
     error = 0.0
     in_start = time.time()
@@ -90,4 +94,13 @@ if latent_size == 2:
             for k in xrange(top_w):
                 print i2w[ind[k]],
             print "\n"
+else:
+    sampels = 32
+    for i in xrange(sampels):
+        z = model.noiser(latent_size)
+        y = model.generate(z)[0,:]
+        ind = np.argsort(-y)
+        for k in xrange(top_w):
+            print i2w[ind[k]],
+        print "\n"
 
