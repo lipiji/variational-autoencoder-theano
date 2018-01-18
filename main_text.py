@@ -1,6 +1,6 @@
 #pylint: skip-file
 import os
-cudaid = 3
+cudaid = 2
 os.environ["THEANO_FLAGS"] = "device=cuda" + str(cudaid)
 
 import time
@@ -35,7 +35,7 @@ model = VAE(dim_x, dim_x, hidden_size, latent_size, continuous, optimizer)
 
 print "training..."
 start = time.time()
-for i in xrange(30):
+for i in xrange(100):
     train_xy = data.batched_idx(train_idx, batch_size)
     error = 0.0
     in_start = time.time()

@@ -1,4 +1,8 @@
 #pylint: skip-file
+import os
+cudaid = 0
+os.environ["THEANO_FLAGS"] = "device=cuda" + str(cudaid)
+
 import time
 import sys
 import numpy as np
@@ -8,7 +12,6 @@ from VAE import *
 import data
 import matplotlib.pyplot as plt
 
-use_gpu(2)
 
 lr = 0.001
 drop_rate = 0.
